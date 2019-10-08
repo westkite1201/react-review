@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import InputTable from './InputTable/InputTable'
 import Review from './Review/Review'
+import axios from 'axios'
 @observer
 class Reviews extends Component {
     @observable reviews = [];
@@ -29,6 +30,15 @@ class Reviews extends Component {
                 <Review obj = {item}
                         key = {i}/>
             )
+        })
+    }
+    @action
+    test = () => {
+        console.log('test1');
+        console.log('sample code')
+        axios.get('/api/user/getUserInfo', {
+        }).then((res)=>{
+            console.log(res)
         })
     }
     render() {

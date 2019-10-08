@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.get('/getUserInfo', controller.getUserInfo)
 
-export default router;
+module.exports = router;
