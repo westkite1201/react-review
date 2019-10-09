@@ -20,15 +20,17 @@ const oauth2Client = new google.auth.OAuth2(
   googleConfig.clientSecret,
   googleConfig.redirect
 )
+
 const scopes = [
-  'https://www.googleapis.com/auth/drive.metadata.readonly'
+  'https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/userinfo.profile'
 ];
 const url = oauth2Client.generateAuthUrl({
   access_type: 'offline',
   scope : scopes
 })
 function getGoogleApi(auth) {
-  return google.plus({ version:'v1', auth});
+  return google.oauth2({ version:'v2', auth});
 }
 async function googleLogin(code) {
   try{
@@ -42,10 +44,9 @@ async function googleLogin(code) {
     });
     try{
       const login = getGoogleApi(oauth2Client);
-      const res = await login.people.get({userId: 'me'});
-      console.log(res.data.displayName + ':' + res.data.id);
+      let res = await login.userinfo.v2.me.get();
       console.log(res.data)
-      return res.data.displayName;
+      return res.data;
     } catch(err){
       console.log(err)
     } 
