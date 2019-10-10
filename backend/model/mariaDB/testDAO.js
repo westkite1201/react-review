@@ -48,7 +48,7 @@ const insertUser = (conn,cb) => {
         insert into user (name, user_id) values ?
         `,
         [
-            '종원','wengers1004'
+            ['종원','wengers1004']
         ],
         (err, result) => {
             if(err){

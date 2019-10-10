@@ -5,6 +5,6 @@ module.exports ={
         user     : 'root',
         password : 'nqes2adw2!',
         host     : localhost,
-        database : 'mariadb',
+        database : 'review',
     }
 }

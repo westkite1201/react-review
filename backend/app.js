@@ -36,7 +36,9 @@ async function googleLogin(code) {
   try{
     const {tokens} = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
+    
     oauth2Client.on('tokens', (tokens) => {
+      console.log('tokens!!: ',tokens)
       if(tokens.refresh_token){
         console.log('리프레시 토큰: ', tokens.refresh_token);
       }
@@ -45,7 +47,6 @@ async function googleLogin(code) {
     try{
       const login = getGoogleApi(oauth2Client);
       let res = await login.userinfo.v2.me.get();
-      console.log(res.data)
       return res.data;
     } catch(err){
       console.log(err)
