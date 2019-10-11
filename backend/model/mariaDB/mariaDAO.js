@@ -1,6 +1,6 @@
 import dbHelper from './mariaDBHelpers';
 const params = {
-
+    user_id : null
 }
 const doCreateQuery = (conn, cb) => {
     console.log(conn)
@@ -57,6 +57,27 @@ const insertUser = (conn,cb) => {
             }else{
                 console.log(result);
                 return cb(null, conn, result);
+            }
+        }
+    )
+}
+const checkSignUp = (conn, cb) => {
+    conn.query(
+        `
+        select user_id 
+        from user
+        where user_id = ?
+        `,
+        [
+            user_id
+        ],
+        (err, result) => {
+            if(err){
+                console.log(err)
+                return cb(err,conn)
+            }else{
+                console.log(result)
+                return cb(null, conn, result)
             }
         }
     )
