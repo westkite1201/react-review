@@ -3,7 +3,7 @@ import axios from 'axios'
 class Login extends Component {
     clickLogin = () => {
         console.log('object')
-        axios.get('/login', {
+        axios.get('/api/oauth/login', {
             
         }).then((res)=>{
             console.log(res.data)
