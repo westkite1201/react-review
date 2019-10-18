@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Route, BrowserRouter} from 'react-router-dom'
-import App from '../App'
-import Login from '../components/Login'
+import { BrowserRouter} from 'react-router-dom'
+
+import Wrapper from '../pages/Wrapper'
 const Root = () =>(
     <BrowserRouter>
-        <Route exact path = "/" component={App}/>
-        <Route exact path = "/login" component={Login}/>
+        <Wrapper/>
     </BrowserRouter>
 );
 export default Root;
