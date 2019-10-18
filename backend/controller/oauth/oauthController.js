@@ -1,80 +1,66 @@
 import {google} from 'googleapis'
 import googleClient from '../../config/google.json'
 import dao from "../../model/mariaDB/userDao";
+import jwt from 'jsonwebtoken'
+import { resolve } from 'upath';
 const googleConfig = {
-  clientId: googleClient.web.client_id,
-  clientSecret: googleClient.web.client_secret,
-  redirect: googleClient.web.redirect_uris[0]
+    clientId: googleClient.web.client_id,
+    clientSecret: googleClient.web.client_secret,
+    redirect: googleClient.web.redirect_uris[0]
 }
 const oauth2Client = new google.auth.OAuth2(
-  googleConfig.clientId,
-  googleConfig.clientSecret,
-  googleConfig.redirect
+    googleConfig.clientId,
+    googleConfig.clientSecret,
+    googleConfig.redirect
 )
-
 const scopes = [
-  'https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/userinfo.profile'
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
 ];
 const url = oauth2Client.generateAuthUrl({
-  access_type: 'offline',
-  scope : scopes
+    access_type: 'offline',
+    scope : scopes
 })
-function getGoogleApi(auth) {
-  return google.oauth2({ version:'v2', auth});
+const sendToken = async (req, res) => {
+    console.log(req.headers)
+    console.log(req.headers.authorization.split(' ')[1])
+    let jwt = await oauth2Client.verifyIdToken({idToken: req.headers.authorization.split(' ')[1],audience: googleConfig.clientId});
+    let user = {id:jwt.payload.sub, name:jwt.payload.name}
+    await checkSignUp(user)
+    return res.send(await createToken(user))
 }
-async function googleLogin(code) {
-  try{
-    const {tokens} = await oauth2Client.getToken(code);
-    oauth2Client.setCredentials(tokens);
-    
-    oauth2Client.on('tokens', (tokens) => {
-      console.log('tokens!!: ',tokens)
-      if(tokens.refresh_token){
-        console.log('리프레시 토큰: ', tokens.refresh_token);
-      }
-      console.log('access token: ', tokens.access_token);
-    });
-    try{
-      const login = getGoogleApi(oauth2Client);
-      let res = await login.userinfo.v2.me.get();
-      return res.data;
-    } catch(err){
-      console.log(err)
-    } 
-  } catch (err){
-    console.log(err)
-  }
+const createToken = (user) => {
+    const promise = new Promise((resolve, reject)=>{
+        jwt.sign(
+            {
+                id: user.id,
+                name: user.name
+            },
+            'setsecret',
+            {
+                expiresIn: '30m',
+                issuer: 'jongwon',
+                subject: 'userinfo'
+            }, (err, token) => {
+                if(err) reject(err)
+                resolve(token)})
+    })
+    return promise
 }
-const callback = (req, res) => {
-    return res.send(url);
-}
-const googleCallback = async (req, res, next) => {
-    try{
-        const info = await googleLogin(req.query.code);
-        console.log('info: ',info);
-        dao.params.user_id = info.id;    
-        const conn = await dao.connect().getConnection();
-        const rows = await dao.checkSignUp(conn);
-        console.log(rows[0])
-        if(rows[0]==undefined){
-            dao.params.user_id = info.id;
-            dao.params.name = info.name;
-            dao.params.nickname = info.name;
-            const result = await dao.signUp(conn);
-            console.log(result)
-            conn.end();
-        }
-        conn.end();
-        res.redirect('http://localhost:3000');
-        
-    }catch (err) {
-        next(err);
+const checkSignUp = async (info) =>{
+    dao.params.user_id = info.id;    
+    const conn = await dao.connect().getConnection();
+    const rows = await dao.checkSignUp( conn );
+    console.log(rows[0]);
+    if(rows[0] == undefined){
+        dao.params.user_id = info.id;
+        dao.params.name = info.name;
+        dao.params.nickname = info.name;
+        const result = await dao.signUp( conn );
+        console.log( result );
     }
-    
-    
+    conn.end();
 }
 module.exports = {
-    callback: callback,
-    googleCallback: googleCallback
+    sendToken: sendToken
 }
