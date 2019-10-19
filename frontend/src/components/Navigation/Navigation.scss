@@ -1,0 +1,15 @@
+.wrapperRoot{
+    height: 40px;
+    color:#09d3ac;
+    background-color: #282c34;
+}
+.linkItem{
+    display: inline;
+    text-decoration: none;
+    margin: 5px;
+    font-size: 20px;
+}
+.linkItem:visited{
+    color:#09d3ac;
+    text-decoration: none;
+}

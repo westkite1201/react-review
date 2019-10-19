@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
-import './Review.scss'
+import './CreateReview.scss'
 @observer
-class Review extends Component {
+class CreateReview extends Component {
     render() {
         console.log(this.props.obj)
         return (
             <div className = 'reviewBox'>
-                <div className = 'title'>
+                <div>
                     {this.props.obj.title}
                 </div>
-                <div className = 'content'>
+                <div>
                     {this.props.obj.content}
                 </div>
             </div>
         )
     }
 }
-export default Review
+export default CreateReview

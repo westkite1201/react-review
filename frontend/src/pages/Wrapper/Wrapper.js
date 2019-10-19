@@ -6,6 +6,7 @@ import { Route} from 'react-router-dom'
 import Navigation from '../../components/Navigation'
 import Reviews from '../../components/Reviews'
 import Login from '../../components/Login'
+import App from '../../App'
 @observer
 class Wrapper extends Component {
     
@@ -14,6 +15,7 @@ class Wrapper extends Component {
             <div>
                 <Navigation/>
                 <Route exact path = "/" component={Reviews}/>
+                <Route exact path = "/app" component={App}/>
                 <Route exact path = "/login" component={Login}/>
             </div>
         )
