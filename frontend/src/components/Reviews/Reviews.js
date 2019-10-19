@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
+import axios from 'axios'
+
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+
 import InputTable from './InputTable/InputTable'
 import Review from './Review/Review'
-import axios from 'axios'
+import './Reviews.scss'
 @observer
 class Reviews extends Component {
     @observable reviews = [];
@@ -43,9 +46,9 @@ class Reviews extends Component {
     }
     render() {
         return (
-            <div>
+            <div className = 'ReviewsRoot'>
                 {this.switch}
-                <AddCircleIcon onClick = {this.addReview}/>
+                <AddCircleIcon className='icon' fontSize = 'large' onClick = {this.addReview}/>
                 {this.createList(this.reviews)}
             </div>
         )

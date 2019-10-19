@@ -43,7 +43,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <img src = '/images/btn_google_signin_dark_normal_web@2x.png' ref = 'googleLoginBtn' />
+                <img src = '/images/btn_google_signin_light_normal_web.png' ref = 'googleLoginBtn' />
             </div>
         )
     }

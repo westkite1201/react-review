@@ -7,11 +7,15 @@ import './InputTable.scss'
 @observer
 class InputTable extends Component {
     handleUpload = () => {
-        let obj = {
-            title: document.getElementById('filled-name').value,
-            content: document.getElementById('filled-multiline-flexible').value
+        let title = document.getElementById('filled-name').value
+        let content = document.getElementById('filled-multiline-flexible').value 
+        if(title && content){
+            let obj = {
+                title: title,
+                content: content
+            }
+            this.props.pullInput(obj)
         }
-        this.props.pullInput(obj)
     }
     render() {
         return (
