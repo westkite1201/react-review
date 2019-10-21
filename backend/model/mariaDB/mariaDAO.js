@@ -42,46 +42,6 @@ const selectUser = (conn,cb) => {
         }
     )
 }
-const insertUser = (conn,cb) => {
-    conn.query(
-        `
-        insert into user (name, user_id) values ?
-        `,
-        [
-            '종원','wengers1004'
-        ],
-        (err, result) => {
-            if(err){
-                console.log(err)
-                return cb(err, conn);
-            }else{
-                console.log(result);
-                return cb(null, conn, result);
-            }
-        }
-    )
-}
-const checkSignUp = (conn, cb) => {
-    conn.query(
-        `
-        select user_id 
-        from user
-        where user_id = ?
-        `,
-        [
-            user_id
-        ],
-        (err, result) => {
-            if(err){
-                console.log(err)
-                return cb(err,conn)
-            }else{
-                console.log(result)
-                return cb(null, conn, result)
-            }
-        }
-    )
-}
 module.exports ={
     params: params,
     doCreateQuery: doCreateQuery,

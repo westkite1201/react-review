@@ -36,7 +36,7 @@ const createToken = (user) => {
                 id: user.id,
                 name: user.name
             },
-            'setsecret',
+            googleClient.web.client_secret,
             {
                 expiresIn: '30m',
                 issuer: 'jongwon',
