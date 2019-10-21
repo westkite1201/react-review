@@ -33,10 +33,10 @@ class Reviews extends Component {
             { headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}}
         ).then( (res) => {
             console.log(res)
+        }).catch( err => {
+            console.log(err.response.data.message)
+            //err 유형에 따른 처리 로직 추가해야 함
         })
-        
-        //token, obj.
-        
         this.switch = ''
     }
     @action
