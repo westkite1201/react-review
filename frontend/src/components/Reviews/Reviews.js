@@ -25,7 +25,42 @@ class Reviews extends Component {
     @action
     pullInput = (obj) =>{
         this.reviews.push(obj)
+        console.log(this.reviews)
+        console.log(JSON.stringify(this.reviews))
+        localStorage.setItem('mylist', JSON.stringify(this.reviews))
+        axios.post('/api/posts/savePost',
+            { obj: obj },
+            { headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}}
+        ).then( (res) => {
+            console.log(res)
+        })
+        
+        //token, obj.
+        
         this.switch = ''
+    }
+    @action
+    setUpList = (list) => {
+        this.reviews = list;
+    }
+    componentDidMount(){
+        let postsList = localStorage.getItem('mylist');
+        if(!postsList){
+            let jwt = localStorage.getItem('jwt'); 
+            if(jwt){
+                axios.get('/api/posts/posts', {
+                    headers: {
+                        'Authorization': 'bearer '+ jwt
+                    }
+                }).then( res =>{
+                    console.log(res)
+                    localStorage.setItem('mylist', JSON.stringify(res.data));
+                    this.setUpList(res.data);
+                })
+            }
+        }else{
+            this.setUpList(JSON.parse(postsList));
+        }
     }
     createList = (list) => {
         return list.map((item, i) => {
@@ -33,15 +68,6 @@ class Reviews extends Component {
                 <Review obj = {item}
                         key = {i}/>
             )
-        })
-    }
-    @action
-    test = () => {
-        console.log('test1');
-        console.log('sample code')
-        axios.get('/api/user/getUserInfo', {
-        }).then((res)=>{
-            console.log(res)
         })
     }
     render() {
