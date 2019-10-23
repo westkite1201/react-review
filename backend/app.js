@@ -7,7 +7,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const api = require('./controller');
 const app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,6 +20,7 @@ app.set('view engine', 'jade');
 //     res.redirect('/login')
 //   }
 // })
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

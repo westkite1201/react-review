@@ -13,14 +13,6 @@ const oauth2Client = new google.auth.OAuth2(
     googleConfig.clientSecret,
     googleConfig.redirect
 )
-const scopes = [
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile'
-];
-const url = oauth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope : scopes
-})
 const sendToken = async (req, res) => {
     console.log(req.headers)
     console.log(req.headers.authorization.split(' ')[1])

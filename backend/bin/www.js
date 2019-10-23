@@ -3,11 +3,30 @@
 /**
  * Module dependencies.
  */
+const dotenv  = require('dotenv').config();
+const fs      = require('fs');
+const webpush = require('web-push');
+const app     = require('../app');
+const debug   = require('debug')('backend:server');
+const http    = require('http');
 
-var app = require('../app');
-var debug = require('debug')('backend:server');
-var http = require('http');
+if(!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY){
+  const vapidKeys = webpush.generateVAPIDKeys();
 
+  fs.appendFile('.env',('VAPID_PUBLIC_KEY=' + vapidKeys.publicKey+'\r\n'),
+  (err) => {console.log(err);});
+  fs.appendFile('.env',('VAPID_PRIVATE_KEY=' + vapidKeys.privateKey+'\r\n'),
+  (err) => {console.log(err);});
+
+  // webpush.setGCMAPIKey('AAAAEdy7Rd8:APA91bHG7bo00Hdx-e5YxvMxmA3cw9Wg6V0x41O77ICjPmSV_ffCEmFv1zxavC4Sp0sm-xqAWh4NCpoUinpxcXqJc48o79wPVecHwAHzpW6qMWrEq-3Ng9IFRcymG6QrlrmMkvvTXS5Pgbkajp1bvYcLtPH7u6B4jQ'); //firebase server key
+  process.env.VAPID_PUBLIC_KEY  = vapidKeys.publicKey;
+	process.env.VAPID_PRIVATE_KEY = vapidKeys.privateKey;
+}
+webpush.setVapidDetails(
+  'mailto:wengers1004@gmail.com',
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY,
+);
 /**
  * Get port from environment and store in Express.
  */
