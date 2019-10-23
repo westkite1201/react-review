@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {observable, action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
+import {NavLink} from 'react-router-dom'
 import axios from 'axios'
 
 import AddCircleIcon from '@material-ui/icons/AddCircle'
@@ -10,40 +11,8 @@ import Review from './Review/Review'
 import './Reviews.scss'
 @observer
 class Reviews extends Component {
-    @observable reviews = [];
-    @observable switch = '';
-    @action
-    addReview = () => {
-        console.log("object")
-        if(this.switch===''){
-            console.log('in')
-            this.switch = <InputTable pullInput = {this.pullInput}/>
-        }else{
-            this.switch = ''
-        }
-    }
-    @action
-    pullInput = (obj) =>{
-        this.reviews.push(obj)
-        console.log(this.reviews)
-        console.log(JSON.stringify(this.reviews))
-        localStorage.setItem('mylist', JSON.stringify(this.reviews))
-        axios.post('/api/posts/savePost',
-            { obj: obj },
-            { headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}}
-        ).then( (res) => {
-            console.log(res)
-        })
-        
-        //token, obj.
-        
-        this.switch = ''
-    }
-    @action
-    setUpList = (list) => {
-        this.reviews = list;
-    }
     componentDidMount(){
+        const {setUpList} = this.props;
         let postsList = localStorage.getItem('mylist');
         if(!postsList){
             let jwt = localStorage.getItem('jwt'); 
@@ -55,11 +24,11 @@ class Reviews extends Component {
                 }).then( res =>{
                     console.log(res)
                     localStorage.setItem('mylist', JSON.stringify(res.data));
-                    this.setUpList(res.data);
+                    setUpList(res.data);
                 })
             }
         }else{
-            this.setUpList(JSON.parse(postsList));
+            setUpList(JSON.parse(postsList));
         }
     }
     createList = (list) => {
@@ -73,11 +42,16 @@ class Reviews extends Component {
     render() {
         return (
             <div className = 'ReviewsRoot'>
-                {this.switch}
-                <AddCircleIcon className='icon' fontSize = 'large' onClick = {this.addReview}/>
-                {this.createList(this.reviews)}
+                <NavLink to='/write' >
+                    <AddCircleIcon className = 'icon' 
+                                   fontSize  = 'large'/>
+                </NavLink>
+                {this.createList(this.props.posts)}
             </div>
         )
     }
 }
-export default Reviews
+export default inject(({posts}) => ({
+    setUpList: posts.setUpList,
+    posts: posts.posts,
+}))(observer(Reviews));

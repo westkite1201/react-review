@@ -3,6 +3,6 @@ import controller from './userController.js'
 
 const router = express.Router();
 
-router.get('/getUserInfo', controller.getUserInfo)
-router.get('/createTable', controller.createTable)
+router.put('/subscribe_info', controller.insertSubscribe_info)
+router.delete('/subscribe_info', controller.deleteSubscribe_info)
 module.exports = router;

@@ -1,5 +1,6 @@
 .ReviewsRoot{
     height: calc( 100% - 40px );
+    overflow: auto;
     background-color: #f0faff;
 }
 .AddReview{
