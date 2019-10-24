@@ -12,7 +12,7 @@ export default class PostsStore {
         ).then( (res) => {
             console.log(res)
         }).catch( err => {
-            console.log(err.response.data.message)
+            console.log(err.response)
             //err 유형에 따른 처리 로직 추가해야 함
         })
         if(timeValue !== 'none'){
