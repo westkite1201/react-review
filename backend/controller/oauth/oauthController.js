@@ -41,7 +41,7 @@ const createToken = (user) => {
 }
 const checkSignUp = async (info) =>{
     dao.params.user_id = info.id;    
-    const conn = await dao.connect().getConnection();
+    const conn = await dao.connect();
     const rows = await dao.checkSignUp( conn );
     console.log(rows[0]);
     if(rows[0] == undefined){
@@ -50,8 +50,9 @@ const checkSignUp = async (info) =>{
         dao.params.nickname = info.name;
         const result = await dao.signUp( conn );
         console.log( result );
+        
     }
-    conn.end();
+    conn.release();
 }
 module.exports = {
     sendToken: sendToken
