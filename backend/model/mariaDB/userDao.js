@@ -80,5 +80,5 @@ module.exports = {
     selectSubscribeInfo: selectSubscribeInfo,
     checkSignUp: checkSignUp,
     signUp: signUp,
-    connect: dbHelper.pool
+    connect: dbHelper.getConnection
 }

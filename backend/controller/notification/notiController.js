@@ -4,11 +4,9 @@ import ms from 'millisecond'
 
 const pushNotification = async (req, res)=> {
   dao.params.user_id   = req.decoded.id;
-  const conn = await dao.connect().getConnection();
+  const conn = await dao.connect();
   const rows = await dao.selectSubscribeInfo(conn);
-  conn.end();
-  console.log('rows:', rows)
-  console.log('rows0', rows[0])
+  conn.release();
   const subscription = JSON.parse(rows[0].subs_info);
   const payload = new Buffer.from(JSON.stringify(req.body.message), 'utf8')
   let time = ms(req.body.time)

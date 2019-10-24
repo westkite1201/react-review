@@ -1,20 +1,20 @@
 const dao =require('../../model/mariaDB/userDAO');
-
+const pool =require('../../model/mariaDB/mariaDBHelpers').mariadb_pool;
 const insertSubscribe_info = async (req, res) => {
     dao.params.user_id   = req.decoded.id;
     dao.params.subs_info = req.body.subscribe_value;
-    const conn = await dao.connect().getConnection();
+    const conn = await dao.connect();
     const rows = await dao.insertSubscribeInfo(conn);
     console.log(rows)
-    conn.end();
+    conn.release();
     res.send(rows)
 }
 const deleteSubscribe_info = async (req, res) => {
     dao.params.user_id   = req.decoded.id;
-    const conn = await dao.connect().getConnection();
+    const conn = await dao.connect();
     const rows = await dao.deleteSubscribeInfo(conn);
     console.log(rows)
-    conn.end();
+    conn.release();
     res.send(rows)
 }
 module.exports = {

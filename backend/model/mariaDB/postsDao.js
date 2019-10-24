@@ -36,5 +36,5 @@ module.exports = {
     params: params,
     savePost: savePost,
     getPosts: getPosts,
-    connect: dbHelper.pool
+    connect: dbHelper.getConnection
 }
