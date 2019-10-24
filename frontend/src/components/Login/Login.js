@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { generateKeyPair } from 'crypto'
+import './Login.scss'
+
 class Login extends Component {
     googleSDK(){
         window['googleSDKLoaded'] = () => {
@@ -42,8 +43,15 @@ class Login extends Component {
     }
     render() {
         return (
-            <div>
-                <img src = '/images/btn_google_signin_light_normal_web.png' ref = 'googleLoginBtn' />
+            <div className = 'LoginRoot'>
+                According to Hermann Evinghouse's forgetting curve hypothesis, 
+                if there is no attempt to retain memory, 
+                the extent to which memory remains decreases over time.
+                Make note of things that you must remember but not easy to remember!
+                sign in and sign up with google ID !
+                <img className = 'LoginImage'
+                     src = '/images/btn_google_signin_light_normal_web.png' 
+                     ref = 'googleLoginBtn' />
             </div>
         )
     }
