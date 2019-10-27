@@ -1,5 +1,4 @@
-const dao =require('../../model/mariaDB/userDAO');
-const pool =require('../../model/mariaDB/mariaDBHelpers').mariadb_pool;
+import dao from "../../model/mariaDB/userDAO"
 const insertSubscribe_info = async (req, res) => {
     dao.params.user_id   = req.decoded.id;
     dao.params.subs_info = req.body.subscribe_value;

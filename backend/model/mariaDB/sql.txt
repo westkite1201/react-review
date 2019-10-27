@@ -1,0 +1,11 @@
+create table posts ( 
+    review_id int auto_increment, 
+    user_id varchar(1024) null,
+    title varchar(255) null, 
+    content text null, 
+    constraint posts_pk primary key (review_id));
+
+create table subs_info ( 
+    user_id varchar(1024) null, 
+    subs_info varchar(1024) null, 
+    constraint subs_info_pk primary key (subs_info) );
