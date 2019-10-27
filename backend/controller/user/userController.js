@@ -1,4 +1,4 @@
-import dao from "../../model/mariaDB/userDAO"
+import dao from "../../model/mariaDB/userDao"
 const insertSubscribe_info = async (req, res) => {
     dao.params.user_id   = req.decoded.id;
     dao.params.subs_info = req.body.subscribe_value;
