@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
- 
+import Editor from '../Editor';
 import './Write.scss'
 const marks = [
     {value:0,label:'none'},
@@ -18,7 +18,7 @@ const marks = [
     {value:8,label:'1month'}
 ]
 let timeValue = 'none'
-@observer
+
 class Write extends Component {
     handleUpload = () => {
         let title = document.getElementById('filled-name').value
@@ -59,6 +59,7 @@ class Write extends Component {
                     max = {8}
                     marks={marks}
                 />
+                <Editor/>
                 <Button varient = 'contained' color = 'primary' onClick = {this.handleUpload}>
                     upload
                 </Button>

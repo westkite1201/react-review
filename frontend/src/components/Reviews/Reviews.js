@@ -6,7 +6,6 @@ import axios from 'axios'
 
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
-import InputTable from './InputTable/InputTable'
 import Review from './Review/Review'
 import './Reviews.scss'
 @observer
