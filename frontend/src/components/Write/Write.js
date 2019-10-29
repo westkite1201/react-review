@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
-import Editor from '../Editor';
+import MarkdownRenderer from '../MarkdownRenderer';
 import './Write.scss'
 const marks = [
     {value:0,label:'none'},
@@ -17,50 +17,60 @@ const marks = [
     {value:7,label:'1week'},
     {value:8,label:'1month'}
 ]
-let timeValue = 'none'
 
+let title = '';
 class Write extends Component {
+    @observable timeValue = 'none';
+    @observable contentValue = '';
     handleUpload = () => {
-        let title = document.getElementById('filled-name').value
-        let content = document.getElementById('filled-multiline-flexible').value 
-        if(title && content){
+        if(title && this.contentValue){
             let obj = {
                 title: title,
-                content: content
+                content: this.contentValue
             }
-            this.props.pullInput(obj, timeValue)
+            this.props.pullInput(obj, this.timeValue)
             this.props.history.push('/');
         }
     }
-    handleChange = (e, index) => {
-        timeValue = marks[index].label;
+    handleTime = (e, index) => {
+        this.timeValue = marks[index].label;
+    }
+    handleContent = (e) => {
+        this.contentValue = e.target.value;
+    }
+    handleTitle = (e) => {
+        title = e.target.value;
     }
     render() {
         return (
             <div className = 'formBox'>
                 <TextField
-                    id="filled-name"
-                    label="Title"
-                    margin="normal"
-                    variant="filled"
+                    className = 'title'
+                    onChange  = {this.handleTitle}
+                    label     = "Title"
+                    scmargin  = "normal"
+                    variant   = "filled"
                 />
-                <TextField
-                    id="filled-multiline-flexible"
-                    label="Content"
-                    multiline
-                    scmargin="normal"
-                    variant="filled"
+                <textarea
+                    className   = 'contentBox'
+                    placeholder = 'Content'
+                    onChange    = {this.handleContent}
                 />
+                <MarkdownRenderer content = {this.contentValue}/>
                 <Slider
-                    className = 'timeSlider'
-                    aria-labelledby="continuous-slider"
-                    step={1}
-                    onChangeCommitted = {this.handleChange}
-                    max = {8}
-                    marks={marks}
+                    className         = 'timeSlider'
+                    aria-labelledby   = "continuous-slider"
+                    step              = {1}
+                    onChangeCommitted = {this.handleTime}
+                    max               = {8}
+                    marks             = {marks}
                 />
-                <Editor/>
-                <Button varient = 'contained' color = 'primary' onClick = {this.handleUpload}>
+                
+                <Button 
+                    className = 'uploadButton'
+                    varient   = 'contained' 
+                    color     = 'primary' 
+                    onClick   = {this.handleUpload}>
                     upload
                 </Button>
             </div>

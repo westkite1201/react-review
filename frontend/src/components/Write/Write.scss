@@ -1,10 +1,32 @@
 .formBox{
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    height: calc(100% - 40px);
+}
+.title{
+    width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.contentBox{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    resize: none;
+    height: 95%;
+    border-top: none;
+    padding: 10px;
+    overflow: auto;
 }
 .timeSlider{
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
+.uploadButton{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
