@@ -1,0 +1,11 @@
+.MarkdownRendererBox{
+    height: 95%;
+    word-break: break-all;
+    overflow: auto;
+    padding: 10px;
+    border-bottom: 1px solid rgb(169, 169, 169);
+}
+.markdownView{
+    display: inline-block;
+    width: 100%;
+}
