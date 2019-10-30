@@ -1,10 +1,7 @@
-import React, {useEffect} from 'react'
-import marked from 'marked'
-import { observer } from "mobx-react"
-import {observable, action} from 'mobx'
+import React from 'react'
 import Prism from 'prismjs'
+import { observer } from "mobx-react"
 import cx from 'classnames'
-import TextField from '@material-ui/core/TextField'
 import 'prismjs/components/prism-bash.min'
 import 'prismjs/components/prism-typescript.min'
 import 'prismjs/components/prism-javascript.min'
@@ -19,22 +16,8 @@ import './MarkdownRenderer.scss'
 //if you want another themes that choose one in node_modules/prism-themes/themes/another
 
 const MarkdownRenderer = ({content, css}) => {
-    marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false,
-        xhtml: false,
-        highlight(code, lang) {
-            return Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup, lang);
-        },
-    })
     if(document.getElementById('content')){
-        document.getElementById('content').innerHTML = marked(content)
+        document.getElementById('content').innerHTML = content
     }
     return (
         <div className = {cx('MarkdownRendererBox', css)} >

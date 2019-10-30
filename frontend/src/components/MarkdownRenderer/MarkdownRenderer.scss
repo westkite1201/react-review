@@ -10,10 +10,10 @@
     display: inline-block;
     width: 100%;
 }
-.markdownView > pre{
+pre{
     display: grid;
     overflow-x: auto;
 }
-.markdownView > pre > code{
+pre > code{
     padding: 15px;
 }

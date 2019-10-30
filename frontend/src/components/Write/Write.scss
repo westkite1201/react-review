@@ -20,10 +20,9 @@
 }
 .timeSlider{
     max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
     grid-column-start: 1;
     grid-column-end: 3;
+    justify-self: center;
 }
 .uploadButton{
     grid-column-start: 1;
