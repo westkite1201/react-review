@@ -8,11 +8,11 @@ class Review extends Component {
         console.log(this.props.obj)
         return (
             <div className = 'reviewBox'>
-                <div className = 'title'>
+                <h3 className = 'title'>
                     {this.props.obj.title}
-                </div>
+                </h3>
                 <div className = 'content'>
-                    {this.props.obj.content}
+                    {this.props.obj.preView}
                 </div>
             </div>
         )

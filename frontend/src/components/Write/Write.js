@@ -21,12 +21,13 @@ const marks = [
 let title = '';
 class Write extends Component {
     @observable timeValue = 'none';
-    @observable contentValue = '';
+    
     handleUpload = () => {
-        if(title && this.contentValue){
+        const {content} = this.props
+        if(title && content){
             let obj = {
                 title: title,
-                content: this.contentValue
+                content: content
             }
             this.props.pullInput(obj, this.timeValue)
             this.props.history.push('/');
@@ -35,13 +36,11 @@ class Write extends Component {
     handleTime = (e, index) => {
         this.timeValue = marks[index].label;
     }
-    handleContent = (e) => {
-        this.contentValue = e.target.value;
-    }
     handleTitle = (e) => {
         title = e.target.value;
     }
     render() {
+        const { markedContent, handleContent } = this.props;
         return (
             <div className = 'formBox'>
                 <TextField
@@ -54,9 +53,9 @@ class Write extends Component {
                 <textarea
                     className   = 'contentBox'
                     placeholder = 'Content'
-                    onChange    = {this.handleContent}
+                    onChange    = {handleContent}
                 />
-                <MarkdownRenderer content = {this.contentValue}/>
+                <MarkdownRenderer content = {markedContent}/>
                 <Slider
                     className         = 'timeSlider'
                     aria-labelledby   = "continuous-slider"
@@ -78,5 +77,8 @@ class Write extends Component {
     }
 }
 export default inject(({posts}) => ({
-    pullInput: posts.pullInput
+    pullInput     : posts.pullInput,
+    content       : posts.content,
+    markedContent : posts.markedContent,
+    handleContent : posts.handleContent
 }))(observer(Write))
