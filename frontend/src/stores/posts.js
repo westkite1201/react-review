@@ -20,8 +20,6 @@ marked.setOptions({
 
 export default class PostsStore {
     @observable posts = [];
-    @observable content = '';
-    @observable markedContent = '';
     @action 
     pullInput = (obj, timeValue) => {
         axios.post('/api/posts/savePost',
@@ -36,7 +34,7 @@ export default class PostsStore {
             })
 
             obj.preView = preView
-            obj.id = res.data.insertId
+            obj.post_id = res.data.insertId
             this.posts.push(obj)
             localStorage.setItem('mylist', JSON.stringify(this.posts))
             console.log(res)
@@ -83,8 +81,7 @@ export default class PostsStore {
         }
     }
     @action
-    handleContent = (content) => {
-        this.content       = content.target.value
-        this.markedContent = marked(content.target.value)
+    renderToMarkdown = (content) => {
+        return marked(content)
     }
 }

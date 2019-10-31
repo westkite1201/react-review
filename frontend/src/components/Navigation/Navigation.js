@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 import axios from 'axios'
-import Login from '../Login'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import './Navigation.scss'
@@ -19,14 +18,11 @@ class Navigation extends Component {
             headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}
         }).then( res =>{
             this.key = res.data;
-            console.log(res.data)
-            console.log(this.key)
             if ('serviceWorker' in navigator && 'PushManager' in window) {
                 navigator.serviceWorker.register('/sw.js').then(
                     (swReg) => {
                         //'Service Worker is registered'
                         swRegistration = swReg;
-                        console.log('oooooo!',swReg)
                         this.initialiseUI();
                 }).catch(
                     (error) => {

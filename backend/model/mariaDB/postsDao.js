@@ -24,7 +24,7 @@ const savePost = ( conn ) => {
 }
 const getPosts = ( conn ) => {
     return conn.query(
-        `select title, content 
+        `select post_id, title, content
          from posts 
          where user_id = ?
         `, [

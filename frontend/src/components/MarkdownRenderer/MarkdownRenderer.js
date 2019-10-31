@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Prism from 'prismjs'
-import { observer } from "mobx-react"
+import { observer, inject } from "mobx-react"
 import cx from 'classnames'
 import 'prismjs/components/prism-bash.min'
 import 'prismjs/components/prism-typescript.min'
@@ -15,9 +15,14 @@ import 'prism-themes/themes/prism-material-dark.css'
 import './MarkdownRenderer.scss'
 //if you want another themes that choose one in node_modules/prism-themes/themes/another
 
-const MarkdownRenderer = ({content, css}) => {
+const MarkdownRenderer = ({content, css, renderToMarkdown}) => {
+    useEffect(() => {
+        if(document.getElementById('content')){
+            document.getElementById('content').innerHTML =renderToMarkdown(content)
+        }
+    },[])
     if(document.getElementById('content')){
-        document.getElementById('content').innerHTML = content
+        document.getElementById('content').innerHTML = renderToMarkdown(content)
     }
     return (
         <div className = {cx('MarkdownRendererBox', css)} >
@@ -25,4 +30,6 @@ const MarkdownRenderer = ({content, css}) => {
         </div>
     );
 }
-export default (observer(MarkdownRenderer));
+export default inject(({posts})=> ({
+    renderToMarkdown: posts.renderToMarkdown 
+}))(observer(MarkdownRenderer))
