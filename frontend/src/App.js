@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Reviews from './components/Reviews'
+import Posts from './components/Posts'
 function App() {
   return (
     <div className="App">
@@ -18,7 +18,7 @@ function App() {
         >
           Learn React
         </a>
-        <Reviews/>
+        <Posts/>
       </header>
     </div>
   );

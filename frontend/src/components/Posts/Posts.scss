@@ -1,13 +1,9 @@
-.ReviewsRoot{
+.PostsRoot{
+    display: flex;
+    flex-wrap: wrap;
     height: calc( 100% - 40px );
     overflow: auto;
     background-color: #f0faff;
-}
-.AddReview{
-    background-color: gray;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
 }
 .icon{
     color: #09d3ac;

@@ -3,26 +3,24 @@ import {observer, inject} from 'mobx-react'
 import {NavLink} from 'react-router-dom'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
-import Review from './Review/Review'
-import './Reviews.scss'
+import Preview from './Preview'
+import './Posts.scss'
 @observer
-class Reviews extends Component {
+class Posts extends Component {
     componentDidMount(){
         this.props.setUpList()
     }
     createList = (list) => {
-        console.log(list)
         return list.map((item, i) => {
             return(
-                <Review obj = {item}
+                <Preview obj = {item}
                         key = {i}/>
             )
         })
     }
     render() {
-        console.log(this.props.posts)
         return (
-            <div className = 'ReviewsRoot'>
+            <div className = 'PostsRoot'>
                 <NavLink to='/write' >
                     <AddCircleIcon className = 'icon' 
                                    fontSize  = 'large'/>
@@ -35,4 +33,4 @@ class Reviews extends Component {
 export default inject(({posts}) => ({
     setUpList: posts.setUpList,
     posts: posts.posts,
-}))(observer(Reviews));
+}))(observer(Posts));
