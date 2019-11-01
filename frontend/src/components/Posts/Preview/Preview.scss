@@ -25,12 +25,12 @@
     background-color: #ffffff;
     overflow: hidden;
 }
-.title{
+.PreviewTitle{
     margin: 5px;
 }
-.content{
+.PreviewContent{
     display: -webkit-box;
-    -webkit-line-clamp: 10;
+    -webkit-line-clamp: 9;
     -webkit-box-orient: vertical;
     margin: 5px;
     overflow: hidden;
@@ -42,4 +42,12 @@
 .postLink:visited{
     text-decoration: none;
     color: black;
+}
+.horizon{
+    height: 1px;
+    background-color: #fff1c8;
+    box-shadow: 1px 1px 1px #fde18b;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
 }

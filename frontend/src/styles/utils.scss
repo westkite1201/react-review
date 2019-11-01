@@ -1,0 +1,11 @@
+/*
+$는 변수
+@mixin 은 재사용되는 스타일 블록을 함수처럼 사용할 때 사용
+ex @maxin square($size) {
+    width: $size
+}
+*/
+$navHeight: 50px;
+@mixin height(){
+    height: calc(100% - #{$navHeight});
+}

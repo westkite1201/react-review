@@ -1,7 +1,8 @@
+@import '../../styles/utils.scss';
 .PostsRoot{
     display: flex;
     flex-wrap: wrap;
-    height: calc( 100% - 50px );
+    @include height();
     overflow: auto;
     background-color: #fec20a;
 }
