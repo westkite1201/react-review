@@ -1,8 +1,10 @@
+@import '../../styles/utils.scss';
 .formBox{
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto 1fr;
-    height: calc(100% - 40px);
+    
+    @include height();
 }
 .title{
     width: 100%;

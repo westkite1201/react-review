@@ -1,15 +1,20 @@
-.wrapperRoot{
-    height: 40px;
-    color:#09d3ac;
-    background-color: #282c34;
+.NavigationRoot{
+    height: 50px;
+    color:#fec20a;
+    background-color: #000000;
 }
-.linkItem{
+.LinkItem{
     display: inline;
+    margin: 10px;
+    font-size: 30px;
+    line-height: 45px;
+    font-weight: bold;
     text-decoration: none;
-    margin: 5px;
-    font-size: 20px;
 }
-.linkItem:visited{
-    color:#09d3ac;
+.LinkItem:visited{
+    color:#fec20a;
+    line-height: 45px;
+    font-weight: bold;
+    
     text-decoration: none;
 }

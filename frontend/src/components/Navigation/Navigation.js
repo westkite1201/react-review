@@ -117,9 +117,9 @@ class Navigation extends Component {
     }
     render() {
         return (
-            <div className = 'wrapperRoot'>
-                <NavLink to='/' className = 'linkItem'>Home</NavLink>
-                <NavLink to='/login' className = 'linkItem'>Login</NavLink>
+            <div className = 'NavigationRoot'>
+                <NavLink to='/' className = 'LinkItem'>Reminder</NavLink>
+                <NavLink to='/login' className = 'LinkItem'>Login</NavLink>
                 {this.button}
             </div>
         )

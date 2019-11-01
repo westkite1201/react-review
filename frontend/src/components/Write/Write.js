@@ -17,7 +17,13 @@ const marks = [
     {value:7,label:'1week'},
     {value:8,label:'1month'}
 ]
-
+const style = {
+    height: '95%',
+    overflowX: 'unset',
+    overflowY: 'auto',
+    padding: '10px',
+    borderBottom: '1px solid darkgray'
+}
 let title = ''
 
 class Write extends Component {
@@ -43,6 +49,7 @@ class Write extends Component {
     handleContent = (e) =>{
         this.content = e.target.value
     }
+
     render() {
         return (
             <div className = 'formBox'>
@@ -58,7 +65,7 @@ class Write extends Component {
                     placeholder = 'Content'
                     onChange    = {this.handleContent}
                 />
-                <MarkdownRenderer content = {this.content}/>
+                <MarkdownRenderer content = {this.content} css = {style}/>
                 <Slider
                     className         = 'timeSlider'
                     aria-labelledby   = "continuous-slider"

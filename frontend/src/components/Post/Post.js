@@ -7,12 +7,15 @@ class Post extends Component {
     render() {
         const {title, content} = this.props.location.state;
         return (
-            <div className = 'reviewBox'>
-                <h3 className = 'title'>
-                    {title}
-                </h3>
-                <div className = 'content'>
-                    <MarkDownRenderer content = {content}/>
+            <div className = 'PostRoot'>
+                <div className = 'postBox'>
+                    <h1 className = 'title'>
+                        {title}
+                    </h1>
+                    <div className = 'horizon'/>
+                    <div className = 'content'>
+                        <MarkDownRenderer content = {content}/>
+                    </div>
                 </div>
             </div>
         )

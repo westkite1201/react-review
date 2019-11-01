@@ -25,7 +25,7 @@ const MarkdownRenderer = ({content, css, renderToMarkdown}) => {
         document.getElementById('content').innerHTML = renderToMarkdown(content)
     }
     return (
-        <div className = {cx('MarkdownRendererBox', css)} >
+        <div style = {css} >
             <div id='content' className={cx('material-dark', 'markdownView')}/>
         </div>
     );

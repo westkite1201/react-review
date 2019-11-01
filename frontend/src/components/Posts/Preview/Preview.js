@@ -14,11 +14,12 @@ class Preview extends Component {
                         content: this.props.obj.content
                     }
                 }}>
-                    <h3 className = 'title'>
+                    <h3 className = 'PreviewTitle'>
                         {this.props.obj.title}
                     </h3>
                 </NavLink>
-                <div className = 'content'>
+                <div className = 'horizon'/>
+                <div className = 'PreviewContent'>
                     {this.props.obj.preView}
                 </div>
             </div>

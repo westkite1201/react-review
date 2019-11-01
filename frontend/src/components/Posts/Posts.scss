@@ -1,12 +1,13 @@
+@import '../../styles/utils.scss';
 .PostsRoot{
     display: flex;
     flex-wrap: wrap;
-    height: calc( 100% - 40px );
+    @include height();
     overflow: auto;
-    background-color: #f0faff;
+    background-color: #fec20a;
 }
 .icon{
-    color: #09d3ac;
+    color: #000000;
     position: absolute;
     top: 50px;
     right: 30px;
