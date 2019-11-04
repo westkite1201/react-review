@@ -78,7 +78,8 @@
   "scripts": {
     "start": "cross-env NODE_PATH=src node scripts/start.js",
     "build": "cross-env NODE_PATH=src node scripts/build.js",
-    "test": "cross-env NODE_PATH=src node scripts/test.js"
+    "test": "cross-env NODE_PATH=src node scripts/test.js",
+    "production": "serve -s build -l 3000"
   },
   "eslintConfig": {
     "extends": "react-app"
