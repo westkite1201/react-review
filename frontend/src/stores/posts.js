@@ -32,15 +32,11 @@ export default class PostsStore {
                     preView += item.text+' '
                 }
             })
-
             obj.preView = preView
             obj.post_id = res.data.insertId
-            this.posts.push(obj)
-            localStorage.setItem('mylist', JSON.stringify(this.posts))
-            console.log(res)
+            this.posts.splice(0, 0,  obj)
         }).catch( err => {
             console.log(err.response)
-            //err 유형에 따른 처리 로직 추가해야 함
         })
         if(timeValue !== 'none'){
             axios.post('/api/notification/',
@@ -53,31 +49,24 @@ export default class PostsStore {
     }
     @action 
     setUpList = () => {
-        let postsList = localStorage.getItem('mylist');
-        if(!postsList){
-            let jwt = localStorage.getItem('jwt'); 
-            if(jwt){
-                axios.get('/api/posts/posts', {
-                    headers: {
-                        'Authorization': 'bearer '+ jwt
-                    }
-                }).then( res =>{
-                    res.data.forEach(element => {
-                        let preView = ''
-                        marked.lexer(element.content).forEach(item => {
-                            if(item.text){
-                                preView += item.text + ' '
-                            }
-                        })
-                        element.preView = preView
-                        this.posts.push(element)
-                    });
-                    localStorage.setItem('mylist', JSON.stringify(this.posts));
-                })
-            }
-        }else{
-            this.posts = JSON.parse(postsList);
-            // this.posts = postsList
+        let jwt = localStorage.getItem('jwt');
+        if(jwt && !this.posts.length){
+            axios.get('/api/posts/posts', {
+                headers: {
+                    'Authorization': 'bearer '+ jwt
+                }
+            }).then( res =>{
+                res.data.forEach(element => {
+                    let preView = ''
+                    marked.lexer(element.content).forEach(item => {
+                        if(item.text){
+                            preView += item.text + ' '
+                        }
+                    })
+                    element.preView = preView
+                    this.posts.push(element)
+                });
+            })
         }
     }
     @action
