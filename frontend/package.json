@@ -2,6 +2,7 @@
   "name": "react-review",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://remindernote.tk", 
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@babel/core": "7.6.0",
@@ -79,7 +80,7 @@
     "start": "cross-env NODE_PATH=src node scripts/start.js",
     "build": "cross-env NODE_PATH=src node scripts/build.js",
     "test": "cross-env NODE_PATH=src node scripts/test.js",
-    "production": "serve -s build -l 3000"
+    "deploy":"HTTPS=true cross-env NODE_PATH=src node scripts/start.js"
   },
   "eslintConfig": {
     "extends": "react-app"
