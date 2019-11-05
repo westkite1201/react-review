@@ -2,7 +2,7 @@ import {observable, action, computed} from 'mobx';
 import marked from 'marked'
 import Prism from 'prismjs'
 import axios from "axios";
-
+import { toast } from 'react-toastify'
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
@@ -23,6 +23,21 @@ export default class PostsStore {
     @observable notiFlag = false;
     @observable auth = '';
     @observable jwt = localStorage.getItem('jwt')
+
+
+    successSetPosts = () => {
+        toast.success("Success Set POSTS!", {
+            position: toast.POSITION.TOP_CENTER
+        });
+    }
+    
+    errorSetPosts = (message) => {
+        toast.error(message, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 5000,
+        });
+    }
+    
     @action 
     pullInput = (obj, timeValue) => {
         axios.post('/api/posts/savePost',
@@ -40,6 +55,7 @@ export default class PostsStore {
             this.posts.splice(0, 0,  obj)
         }).catch( err => {
             console.log(err.response)
+            this.errorSetPosts('죄송합니다. 에러가 발생했어요 ㅠ')
         })
         if(timeValue !== 'none'){
             axios.post('/api/notification/',
@@ -69,6 +85,9 @@ export default class PostsStore {
                     element.preView = preView
                     this.posts.push(element)
                 });
+            }).catch(err=>{
+                console.log(err)
+                this.errorSetPosts('죄송합니다. 에러가 발생했어요 ㅠ')
             })
         }
     }

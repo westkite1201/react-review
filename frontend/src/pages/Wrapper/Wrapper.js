@@ -6,11 +6,14 @@ import Login from '../../components/Login'
 import Write from '../../components/Write'
 import Post from '../../components/Post'
 import App from '../../App'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Wrapper extends Component {
     
     render() {
         return (
             <div>
+                <ToastContainer/>
                 <Navigation/>
                 <Route exact path = "/" component={Posts}/>
                 <Route exact path = "/app" component={App}/>
