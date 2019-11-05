@@ -13,6 +13,8 @@ class Login extends Component {
                     scope: 'profile email',
                     
                 });
+                console.log(this.auth2)
+                this.props.setAuth(this.auth2)
                 this.prepareLoginButton();
             })
             console.log(window.gapi)
@@ -34,7 +36,7 @@ class Login extends Component {
                     headers: {'Authorization': 'bearer '+ jwt}
                 }).then( (res) => {
                     localStorage.setItem('jwt', res.data)
-                    this.props.setUpNotiFlag()
+                    this.props.login(res.data)
                     this.props.history.push('/');
             })
         }, (error) => {
@@ -43,13 +45,19 @@ class Login extends Component {
     }
     componentDidMount(){
         this.googleSDK();
+        if(this.props.auth){
+            this.auth2 = this.props.auth;
+            this.prepareLoginButton()
+        }
     }
     render() {
         return (
             <div className = 'LoginRoot'>
-                공부한 내용을 정리하고 복습하세요.
-                공부한 내용을 다시 볼 수 있도록 알려드릴께요.
-                Google ID로 가입, 로그인하기
+                <div className = 'LoginContentBox'>
+                    <div className='LoginContent'>언제 어디서나 공부한 내용을 정리하고 복습하세요.</div>
+                    <div className='LoginContent'>공부한 내용을 다시 볼 수 있도록 알려드릴께요.</div>
+                    <div className='LoginContent'>지금 Google ID로 로그인하기</div>        
+                </div>
                 <img className = 'LoginImage'
                      src = '/images/btn_google_signin_light_normal_web.png' 
                      ref = 'googleLoginBtn' />
@@ -58,5 +66,7 @@ class Login extends Component {
     }
 }
 export default inject(({posts})=> ({
-    setUpNotiFlag: posts.setUpNotiFlag
+    login: posts.login,
+    auth: posts.auth,
+    setAuth: posts.setAuth
 }))(observer(Login))

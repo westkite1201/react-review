@@ -21,6 +21,8 @@ marked.setOptions({
 export default class PostsStore {
     @observable posts = [];
     @observable notiFlag = false;
+    @observable auth = '';
+    @observable jwt = localStorage.getItem('jwt')
     @action 
     pullInput = (obj, timeValue) => {
         axios.post('/api/posts/savePost',
@@ -75,7 +77,18 @@ export default class PostsStore {
         return marked(content)
     }
     @action
-    setUpNotiFlag = () => {
-        this.notiFlag = true;
+    logout =() => {
+        this.posts = []
+        this.jwt = ''
+        localStorage.setItem('jwt', '')
+    }
+    @action
+    login = (jwt) => {
+        this.jwt = jwt
+        this.notiFlag = true
+    }
+    @action
+    setAuth = (param) => {
+        this.auth = param;
     }
 }
