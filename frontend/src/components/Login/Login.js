@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {observer, inject} from 'mobx-react'
 import axios from 'axios'
 import './Login.scss'
 
@@ -33,6 +34,8 @@ class Login extends Component {
                     headers: {'Authorization': 'bearer '+ jwt}
                 }).then( (res) => {
                     localStorage.setItem('jwt', res.data)
+                    this.props.setUpNotiFlag()
+                    this.props.history.push('/');
             })
         }, (error) => {
             alert(JSON.stringify(error, undefined, 2));
@@ -44,11 +47,9 @@ class Login extends Component {
     render() {
         return (
             <div className = 'LoginRoot'>
-                According to Hermann Evinghouse's forgetting curve hypothesis, 
-                if there is no attempt to retain memory, 
-                the extent to which memory remains decreases over time.
-                Make note of things that you must remember but not easy to remember!
-                sign in and sign up with google ID !
+                공부한 내용을 정리하고 복습하세요.
+                공부한 내용을 다시 볼 수 있도록 알려드릴께요.
+                Google ID로 가입, 로그인하기
                 <img className = 'LoginImage'
                      src = '/images/btn_google_signin_light_normal_web.png' 
                      ref = 'googleLoginBtn' />
@@ -56,4 +57,6 @@ class Login extends Component {
         )
     }
 }
-export default Login
+export default inject(({posts})=> ({
+    setUpNotiFlag: posts.setUpNotiFlag
+}))(observer(Login))

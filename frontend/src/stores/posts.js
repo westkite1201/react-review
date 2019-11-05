@@ -20,6 +20,7 @@ marked.setOptions({
 
 export default class PostsStore {
     @observable posts = [];
+    @observable notiFlag = false;
     @action 
     pullInput = (obj, timeValue) => {
         axios.post('/api/posts/savePost',
@@ -72,5 +73,9 @@ export default class PostsStore {
     @action
     renderToMarkdown = (content) => {
         return marked(content)
+    }
+    @action
+    setUpNotiFlag = () => {
+        this.notiFlag = true;
     }
 }

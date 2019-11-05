@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom'
 import {observable, action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import axios from 'axios'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
@@ -9,11 +9,19 @@ import './Navigation.scss'
 let swRegistration = null;
 let isSubscribed = false;
 
-@observer
+
 class Navigation extends Component {
     @observable button = '';
     @observable key = '';
     componentDidMount(){
+        this.getVAPID()
+    }
+    componentDidUpdate(prevProps, prvState, snapshot){
+        if(prevProps.notiFlag !== this.props.notiFlag){
+            this.getVAPID()
+        }
+    }
+    getVAPID = () => {
         axios.get('/api/notification/vapid', { 
             headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}
         }).then( res =>{
@@ -125,4 +133,6 @@ class Navigation extends Component {
         )
     }
 }
-export default Navigation
+export default inject(({posts}) => ({
+    notiFlag : posts.notiFlag
+}))(observer(Navigation))

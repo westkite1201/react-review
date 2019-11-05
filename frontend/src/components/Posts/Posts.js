@@ -8,6 +8,7 @@ import './Posts.scss'
 @observer
 class Posts extends Component {
     componentDidMount(){
+        if(this)
         this.props.setUpList()
     }
     createList = (list) => {
