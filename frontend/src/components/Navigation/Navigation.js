@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom'
 import {observable, action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import axios from 'axios'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
@@ -9,11 +9,22 @@ import './Navigation.scss'
 let swRegistration = null;
 let isSubscribed = false;
 
-@observer
+
 class Navigation extends Component {
     @observable button = '';
     @observable key = '';
     componentDidMount(){
+        this.getVAPID()
+    }
+    componentDidUpdate(prevProps, prvState, snapshot){
+        if(prevProps.notiFlag !== this.props.notiFlag && this.props.notiFlag){
+            this.getVAPID()
+        }
+        if(this.props.jwt){
+
+        }
+    }
+    getVAPID = () => {
         axios.get('/api/notification/vapid', { 
             headers: {'Authorization': 'bearer '+ localStorage.getItem('jwt')}
         }).then( res =>{
@@ -42,10 +53,10 @@ class Navigation extends Component {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
                 //'User IS subscribed.'
-                this.button = <NotificationsActiveIcon onClick = {this.unsubscribeUser} />
+                this.button = <NotificationsActiveIcon className = 'NaviNoti'onClick = {this.unsubscribeUser} />
                 console.log('issubscribed')
             } else {
-                this.button = <NotificationsOffIcon onClick = {this.subscribeUser} />
+                this.button = <NotificationsOffIcon className = 'NaviNoti'onClick = {this.subscribeUser} />
                 console.log('unsubscribed')
             }
         });
@@ -67,7 +78,7 @@ class Navigation extends Component {
                 ).then((res) => {
                   console.log(res);
                 });
-              this.button = <NotificationsActiveIcon onClick = {this.unsubscribeUser} />
+              this.button = <NotificationsActiveIcon className = 'NaviNoti'onClick = {this.unsubscribeUser} />
               })
               .catch((err) => {
                 console.log('Failed to subscribe the user: ', err);
@@ -84,7 +95,7 @@ class Navigation extends Component {
             ).then((res) => {
                 console.log(res);
             });
-            this.button = <NotificationsOffIcon onClick = {this.subscribeUser}/>
+            this.button = <NotificationsOffIcon className= 'NaviNoti' onClick = {this.subscribeUser}/>
             return subscription.unsubscribe();
           }
         })
@@ -115,14 +126,24 @@ class Navigation extends Component {
         
         return promise;
     }
+    @action
+    logout = () => {
+        this.button = ''
+        this.props.logout()
+    }
     render() {
         return (
             <div className = 'NavigationRoot'>
                 <NavLink to='/' className = 'LinkItem'>Reminder</NavLink>
-                <NavLink to='/login' className = 'LinkItem'>Login</NavLink>
+                {this.props.jwt ? <div className = 'NaviLogout'onClick = {this.logout}>Logout</div>
+                                :<NavLink to='/login' className = 'LinkItem'>Login</NavLink>}
                 {this.button}
             </div>
         )
     }
 }
-export default Navigation
+export default inject(({posts}) => ({
+    notiFlag : posts.notiFlag,
+    jwt: posts.jwt,
+    logout: posts.logout
+}))(observer(Navigation))

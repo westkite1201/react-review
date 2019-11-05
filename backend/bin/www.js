@@ -9,6 +9,7 @@ const webpush = require('web-push');
 const app     = require('../app');
 const debug   = require('debug')('backend:server');
 const http    = require('http');
+const https   = require('https');
 
 if(!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY){
   const vapidKeys = webpush.generateVAPIDKeys();
@@ -37,8 +38,12 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
+const option = process.env.NODE_ENV === 'production' ? {
+  key:fs.readFileSync('../../../../../etc/letsencrypt/live/remindernote.tk/privkey.pem'),
+  cert:fs.readFileSync('../../../../../etc/letsencrypt/live/remindernote.tk/cert.pem')
+} : '';
+var server = process.env.NODE_ENV === 'production' ? 
+              https.createServer(option, app) : http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

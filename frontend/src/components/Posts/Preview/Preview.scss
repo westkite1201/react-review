@@ -27,6 +27,10 @@
 }
 .PreviewTitle{
     margin: 5px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
 }
 .PreviewContent{
     display: -webkit-box;

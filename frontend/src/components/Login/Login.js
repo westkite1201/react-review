@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {observer, inject} from 'mobx-react'
 import axios from 'axios'
 import './Login.scss'
 
@@ -12,6 +13,8 @@ class Login extends Component {
                     scope: 'profile email',
                     
                 });
+                console.log(this.auth2)
+                this.props.setAuth(this.auth2)
                 this.prepareLoginButton();
             })
             console.log(window.gapi)
@@ -33,6 +36,8 @@ class Login extends Component {
                     headers: {'Authorization': 'bearer '+ jwt}
                 }).then( (res) => {
                     localStorage.setItem('jwt', res.data)
+                    this.props.login(res.data)
+                    this.props.history.push('/');
             })
         }, (error) => {
             alert(JSON.stringify(error, undefined, 2));
@@ -40,15 +45,19 @@ class Login extends Component {
     }
     componentDidMount(){
         this.googleSDK();
+        if(this.props.auth){
+            this.auth2 = this.props.auth;
+            this.prepareLoginButton()
+        }
     }
     render() {
         return (
             <div className = 'LoginRoot'>
-                According to Hermann Evinghouse's forgetting curve hypothesis, 
-                if there is no attempt to retain memory, 
-                the extent to which memory remains decreases over time.
-                Make note of things that you must remember but not easy to remember!
-                sign in and sign up with google ID !
+                <div className = 'LoginContentBox'>
+                    <div className='LoginContent'>언제 어디서나 공부한 내용을 정리하고 복습하세요.</div>
+                    <div className='LoginContent'>공부한 내용을 다시 볼 수 있도록 알려드릴께요.</div>
+                    <div className='LoginContent'>지금 Google ID로 로그인하기</div>        
+                </div>
                 <img className = 'LoginImage'
                      src = '/images/btn_google_signin_light_normal_web.png' 
                      ref = 'googleLoginBtn' />
@@ -56,4 +65,8 @@ class Login extends Component {
         )
     }
 }
-export default Login
+export default inject(({posts})=> ({
+    login: posts.login,
+    auth: posts.auth,
+    setAuth: posts.setAuth
+}))(observer(Login))

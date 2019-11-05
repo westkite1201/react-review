@@ -1,13 +1,22 @@
+@import '../../styles/utils.scss';
 .LoginRoot{
     width: 50%;
     margin-left: auto;
     margin-right: auto;
     font-size: xx-large;
-    height: calc(100% - 40px);
+    @include height();
 }
 .LoginImage{
     margin-left: auto;
     margin-right: auto;
     display: block;
     cursor: pointer;
+}
+.LoginContentBox{
+    padding-top: 20%;
+    height: 30%;
+    text-align: center;
+}
+.LoginContent{
+    font-size: x-large;
 }
