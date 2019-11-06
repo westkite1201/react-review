@@ -11,3 +11,9 @@ create table subs_info (
     constraint subs_info_pk primary key (subs_info) );
  create table user (	id int auto_increment, 	name varchar(64) null, 	nickname varchar(128) null, user_id varchar(1024) null,	constraint user_pk	primary key (id));
 
+create table user( 
+    id int auto_increment,
+    name varchar(64) null,
+    nickname varchar(128) null,
+    user_id varchar(1024) null,
+    constraint user_fk primary key(id));
