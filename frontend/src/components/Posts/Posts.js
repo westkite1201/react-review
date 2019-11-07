@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {observer, inject} from 'mobx-react'
 import {NavLink} from 'react-router-dom'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-
+import { toast } from 'react-toastify'
 import Preview from './Preview'
 import './Posts.scss'
 @observer
@@ -18,6 +18,7 @@ class Posts extends Component {
             )
         })
     }
+    
     render() {
         return (
             <div className = 'PostsRoot'>
